@@ -19,19 +19,19 @@ Route::get('/', function () {
 });
 
 Route::get('/products', function () {
-    // return request()->page;
-    // return request('page');
-    // return request()->only('per_page', 'dir');
-    // return request()->except('per_page', 'dir');
-    return "<h1>All Products</h1>";
+    $products = [
+        ['id' => 1, 'name' => "Product 1", "price" => 100],
+        ['id' => 2, 'name' => "Product 2", "price" => 200],
+    ];
+    return view('products.index', compact('products'));
 });
 
 Route::get('/products/create', function () {
-    return "<h1>Add new product</h1>";
+    return view('products.create');
 });
 
 Route::get('/products/{product}', function ($product) {
-    return "<h1>Product {$product}</h1>";
+    return view('products.show', compact('product'));
 });
 
 Route::get('/categories', function () {
