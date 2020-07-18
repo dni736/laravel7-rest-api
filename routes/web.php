@@ -1,6 +1,10 @@
 <?php
 
+use App\Product;
+use App\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\CategoryResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,22 +23,15 @@ Route::get('/', function () {
 });
 
 Route::get('/products', function () {
-    $products = [
-        ['id' => 1, 'name' => "Product 1", "price" => 100],
-        ['id' => 2, 'name' => "Product 2", "price" => 200],
-    ];
-    return view('products.index', compact('products'));
+    $products = Product::orderBy('name')->get();
+    return ProductResource::collection($products);
 });
 
-Route::get('/products/create', function () {
-    return view('products.create');
-});
-
-Route::get('/products/{product}', function ($product) {
-    return view('products.show', compact('product'));
+Route::get('/products/{product}', function (Product $product) {
+    return new ProductResource($product);
 });
 
 Route::get('/categories', function () {
-    return response()->json(["Category 1", "Category 2"]);
-    // return ["Category 1", "Category 2"];
+    $categories = Category::orderBy('name')->get();
+    return CategoryResource::collection($categories);
 });
