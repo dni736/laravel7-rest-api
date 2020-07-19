@@ -22,14 +22,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/products', function () {
-    $products = Product::orderBy('name')->get();
-    return ProductResource::collection($products);
-});
-
-Route::get('/products/{product}', function (Product $product) {
-    return new ProductResource($product);
-});
+Route::get('/products', 'ProductController@index');
+Route::post('/products', 'ProductController@store');
+Route::get('/products/{product}', 'ProductController@show');
+Route::put('/products/{product}', 'ProductController@update');
+Route::delete('/products/{product}', 'ProductController@destroy');
 
 Route::get('/categories', function () {
     $categories = Category::orderBy('name')->get();
