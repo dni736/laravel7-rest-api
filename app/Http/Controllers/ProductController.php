@@ -19,10 +19,18 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
+    protected function validateRequest()
+    {
+        return request()->validate([
+            'name' => 'required|min:10|max:255',
+            'price' => 'required|integer|min:100',
+            'category_id' => 'required|exists:categories,id'
+        ]);
+    }
+
     public function store()
     {
-        // validation goes here
-        $data = request()->all();
+        $data = $this->validateRequest();
 
         $product = Product::create($data); 
 
@@ -31,8 +39,7 @@ class ProductController extends Controller
     
     public function update(Product $product)
     {
-        // validation goes here
-        $data = request()->all();
+        $data = $this->validateRequest();
 
         $product->update($data); 
 
