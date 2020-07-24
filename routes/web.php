@@ -18,17 +18,5 @@ use App\Http\Resources\CategoryResource;
 */
 
 Route::get('/', function () {
-    // return redirect('categories');
     return view('welcome');
-});
-
-Route::get('/products', 'ProductController@index');
-Route::post('/products', 'ProductController@store');
-Route::get('/products/{product}', 'ProductController@show');
-Route::put('/products/{product}', 'ProductController@update');
-Route::delete('/products/{product}', 'ProductController@destroy');
-
-Route::get('/categories', function () {
-    $categories = Category::orderBy('name')->get();
-    return CategoryResource::collection($categories);
 });
